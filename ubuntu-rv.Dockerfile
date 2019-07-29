@@ -1,11 +1,29 @@
 ARG FLAVOR=bionic
-FROM localhost:5201/ubuntu-with-timezone-and-locale:${FLAVOR}
+FROM ubuntu:${FLAVOR}
 
-RUN apt-get update -qq \
-    && apt-get install --yes sudo
-
+ARG TIMEZONE="America/Chicago"
+ARG LOCALE="en_US.UTF-8"
 ARG USER_ID=1001
 ARG GROUP_ID=1001
+
+# Timezone.
+RUN ln --symbolic --no-dereference --force /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && echo "${TIMEZONE}" > /etc/timezone
+
+# Locale.
+RUN apt-get update -qq \
+    && apt-get install --yes locales \
+    && locale-gen --no-purge "${LOCALE}"
+
+ENV LANG="${LOCALE}" \
+    LC_ALL="${LOCALE}" \
+    LANGUAGE="en_US:en"
+
+RUN update-locale
+
+# Default user.
+RUN apt-get update -qq \
+    && apt-get install --yes sudo
 
 RUN addgroup --gid ${GROUP_ID} user \
   && adduser --uid ${USER_ID} \

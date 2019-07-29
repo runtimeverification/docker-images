@@ -1,39 +1,30 @@
+# This file does not define "services" per se.
+# Rather, the following entries define docker
+# images, and not containers.
+#
+# This allows us to use `docker-compose` to
+# build them. See the `Makefile`.
+
 version: "3.7"
 
 services:
 
-  ubuntu-bionic-with-timezone-and-locale:
-    image: localhost:5201/ubuntu-with-timezone-and-locale:bionic
-    build:
-      context: .
-      dockerfile: ubuntu-with-timezone-and-locale.Dockerfile
-      args:
-        FLAVOR: bionic
-        TIMEZONE: "America/Chicago"
-        LOCALE: "en_US.UTF-8"
-
-  ubuntu-xenial-with-timezone-and-locale:
-    image: localhost:5201/ubuntu-with-timezone-and-locale:xenial
-    build:
-      context: .
-      dockerfile: ubuntu-with-timezone-and-locale.Dockerfile
-      args:
-        FLAVOR: xenial
-        TIMEZONE: "America/Chicago"
-        LOCALE: "en_US.UTF-8"
-
   ubuntu-bionic-rv:
-    image: localhost:5201/ubuntu-rv:bionic
+    image: runtimeverificationinc/ubuntu:bionic
     build:
       context: .
       dockerfile: ubuntu-rv.Dockerfile
       args:
         FLAVOR: bionic
+        TIMEZONE: "America/Chicago"
+        LOCALE: "en_US.UTF-8"
 
   ubuntu-xenial-rv:
-    image: localhost:5201/ubuntu-rv:xenial
+    image: runtimeverificationinc/ubuntu:xenial
     build:
       context: .
       dockerfile: ubuntu-rv.Dockerfile
       args:
         FLAVOR: xenial
+        TIMEZONE: "America/Chicago"
+        LOCALE: "en_US.UTF-8"
