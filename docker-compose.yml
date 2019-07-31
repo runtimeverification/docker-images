@@ -9,22 +9,42 @@ version: "3.7"
 
 services:
 
-  ubuntu-bionic-rv:
+  ubuntu-bionic:
     image: runtimeverificationinc/ubuntu:bionic
     build:
       context: .
-      dockerfile: ubuntu-rv.Dockerfile
+      dockerfile: ubuntu.Dockerfile
       args:
         FLAVOR: bionic
         TIMEZONE: "America/Chicago"
         LOCALE: "en_US.UTF-8"
 
-  ubuntu-xenial-rv:
+  ubuntu-xenial:
     image: runtimeverificationinc/ubuntu:xenial
     build:
       context: .
-      dockerfile: ubuntu-rv.Dockerfile
+      dockerfile: ubuntu.Dockerfile
       args:
         FLAVOR: xenial
         TIMEZONE: "America/Chicago"
         LOCALE: "en_US.UTF-8"
+
+  rust-1.34.0-llvm-8-ubuntu-bionic:
+    image: runtimeverificationinc/rust:1.34.0-llvm-8-ubuntu-bionic
+    build:
+      context: .
+      dockerfile: rust-ubuntu.Dockerfile
+      args:
+        FLAVOR: bionic
+        LLVM_VERSION: 8
+        RUST_VERSION: 1.34.0
+
+  z3-4.6.0-llvm-8-ubuntu-bionic:
+    image: runtimeverificationinc/z3:4.6.0-llvm-8-ubuntu-bionic
+    build:
+      context: .
+      dockerfile: z3-ubuntu.Dockerfile
+      args:
+        FLAVOR: bionic
+        LLVM_VERSION: 8
+        Z3_VERSION: 4.6.0
