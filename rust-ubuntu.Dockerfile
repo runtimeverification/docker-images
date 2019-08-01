@@ -57,10 +57,3 @@ RUN    ln -sf $(which clang-${LLVM_VERSION}) /usr/bin/cc \
 # Build rust.
 RUN    cd rustc-${RUST_VERSION}-src \
     && ./x.py build
-
-RUN    cd rustc-${RUST_VERSION}-src \
-    && /root/.cargo/bin/rustup \
-         toolchain \
-         link \
-         rust-${RUST_VERSION}-llvm-${LLVM_VERSION} \
-         build/x86_64-unknown-linux-gnu/stage2
