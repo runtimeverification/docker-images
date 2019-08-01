@@ -1,6 +1,24 @@
 #########
 # Builds rust from source with a given version of LLVM.
-# Does not compile cargo. We download it instead.
+# Does not compile cargo and rustup. We download them instead.
+#
+# Client images are expected to copy
+#
+# - /root/.cargo
+# - /root/.rustup
+# - /rustc-${RUST_VERSION}-src
+#
+# And run
+#
+# RUN    cd rustc-${RUST_VERSION}-src \
+#    && /home/user/.cargo/bin/rustup \
+#         toolchain \
+#         link \
+#         rust-${RUST_VERSION}-llvm-${LLVM_VERSION} \
+#         build/x86_64-unknown-linux-gnu/stage2
+#
+# which exposes the rust toolchain.
+#########
 
 ARG FLAVOR=bionic
 FROM ubuntu:${FLAVOR}
