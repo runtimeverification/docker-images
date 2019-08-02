@@ -16,14 +16,14 @@ ubuntu-%:
 	# Push to the public registry on dockerhub.
 	docker push runtimeverificationinc/ubuntu:$*
 
-rust-1.34.0-llvm-8-ubuntu-%:
+rust-1.34.0-llvm-8-ubuntu-%: ubuntu-%
 	# Build the image.
 	docker-compose build --pull $@
 	# Push to the public registry on dockerhub.
 	docker push runtimeverificationinc/rust:1.34.0-llvm-8-ubuntu-$*
 
 
-z3-4.6.0-llvm-8-ubuntu-%:
+z3-4.6.0-llvm-8-ubuntu-%: ubuntu-%
 	# Build the image.
 	docker-compose build --pull $@
 	# Push to the public registry on dockerhub.

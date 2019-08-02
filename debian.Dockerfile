@@ -1,5 +1,10 @@
+ARG OS=ubuntu
 ARG FLAVOR=bionic
-FROM ubuntu:${FLAVOR}
+
+FROM ${OS}:${FLAVOR}
+
+ARG OS=ubuntu
+ARG FLAVOR=bionic
 
 ARG TIMEZONE="America/Chicago"
 ARG LOCALE="en_US.UTF-8"
@@ -13,13 +18,9 @@ RUN ln --symbolic --no-dereference --force /usr/share/zoneinfo/${TZ} /etc/localt
 # Locale.
 RUN apt-get update -qq \
     && apt-get install --yes locales \
-    && locale-gen --no-purge "${LOCALE}"
-
-ENV LANG="${LOCALE}" \
-    LC_ALL="${LOCALE}" \
-    LANGUAGE="en_US:en"
-
-RUN update-locale
+    && echo "${LOCALE} UTF-8" >> /etc/locale.gen \
+    && locale-gen \
+    && update-locale LANG=${LOCALE} LC_ALL=${LOCALE} LANGUAGE=en_US:en
 
 # Default user.
 RUN apt-get update -qq \

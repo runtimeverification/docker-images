@@ -1,8 +1,12 @@
 #########
 # Builds Z3 from source with a given LLVM version.
 
+ARG OS=ubuntu
 ARG FLAVOR=bionic
-FROM ubuntu:${FLAVOR}
+
+FROM ${OS}:${FLAVOR}
+
+ARG OS=ubuntu
 ARG FLAVOR=bionic
 
 ARG LLVM_VERSION=8

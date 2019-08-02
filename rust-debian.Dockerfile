@@ -20,8 +20,12 @@
 # which exposes the rust toolchain.
 #########
 
+ARG OS=ubuntu
 ARG FLAVOR=bionic
-FROM ubuntu:${FLAVOR}
+
+FROM ${OS}:${FLAVOR}
+
+ARG OS=ubuntu
 ARG FLAVOR=bionic
 
 ARG LLVM_VERSION=8
