@@ -1,36 +1,11 @@
-UBUNTU_PATTERNS := ubuntu-FLAVOR \
-                   rust-1.34.0-llvm-8-ubuntu-FLAVOR \
-									 z3-4.6.0-llvm-8-ubuntu-FLAVOR
+build-%:
+	docker-compose build --pull $*
 
-UBUNTU_BIONIC_IMAGES := $(patsubst FLAVOR,bionic,$(UBUNTU_PATTERNS))
-UBUNTU_XENIAL_IMAGES := $(patsubst FLAVOR,xenial,$(UBUNTU_PATTERNS))
+push-%:
+	$(eval IMG := $(shell echo $* | sed -e "s/\(^[^-]*\).*/\1/"))
+	$(eval TAG := $(shell echo $* | sed -e "s/^[^-]*-\(.*\)/\1/"))
+	docker push runtimeverificationinc/$(IMG):$(TAG)
 
-.PHONY: $(UBUNTU_BIONIC_IMAGES) $(UBUNTU_XENIAL_IMAGES)
-
-.PHONY: default
-default: $(UBUNTU_BIONIC_IMAGES)
-
-ubuntu-%:
-	# Build the image.
-	docker-compose build --pull $@
-	# Push to the public registry on dockerhub.
-	docker push runtimeverificationinc/ubuntu:$*
-
-rust-1.34.0-llvm-8-ubuntu-%: ubuntu-%
-	# Build the image.
-	docker-compose build --pull $@
-	# Push to the public registry on dockerhub.
-	docker push runtimeverificationinc/rust:1.34.0-llvm-8-ubuntu-$*
-
-
-z3-4.6.0-llvm-8-ubuntu-%: ubuntu-%
-	# Build the image.
-	docker-compose build --pull $@
-	# Push to the public registry on dockerhub.
-	docker push runtimeverificationinc/z3:4.6.0-llvm-8-ubuntu-$*
-
-debian-%:
-	# Build the image.
-	docker-compose build --pull $@
-	# Push to the public registry on dockerhub.
-	docker push runtimeverificationinc/debian:$*
+%:
+	$(MAKE) build-$@
+	$(MAKE) push-$@

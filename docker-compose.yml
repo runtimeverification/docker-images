@@ -64,3 +64,12 @@ services:
         FLAVOR: bionic
         LLVM_VERSION: 8
         Z3_VERSION: 4.6.0
+
+  haskell-ubuntu-bionic:
+    image: runtimeverificationinc/haskell:ubuntu-bionic
+    build:
+      context: .
+      dockerfile: haskell-debian.Dockerfile
+      args:
+        OS: ubuntu
+        FLAVOR: bionic
