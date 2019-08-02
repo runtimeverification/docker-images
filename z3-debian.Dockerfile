@@ -4,24 +4,13 @@
 ARG OS=ubuntu
 ARG FLAVOR=bionic
 
-FROM ${OS}:${FLAVOR}
+FROM runtimeverificationinc/${OS}:${FLAVOR}
 
 ARG OS=ubuntu
 ARG FLAVOR=bionic
 
 ARG LLVM_VERSION=8
 ARG Z3_VERSION=4.6.0
-
-# Add the LLVM apt repositories, if needed.
-RUN if [ "${FLAVOR}" != "bionic" ]; then                                                          \
-      echo "deb http://apt.llvm.org/${FLAVOR}/ llvm-toolchain-${FLAVOR}-${LLVM_VERSION} main"     \
-        > /etc/apt/sources.list.d/llvm.list &&                                                    \
-      echo "deb-src http://apt.llvm.org/${FLAVOR}/ llvm-toolchain-${FLAVOR}-${LLVM_VERSION} main" \
-        >> /etc/apt/sources.list.d/llvm.list &&                                                   \
-      apt-get update -q &&                                                                        \
-      apt-get install -y wget &&                                                                  \
-      wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - ;                      \
-    fi
 
 # Install required packages.
 RUN apt-get update -q &&     \

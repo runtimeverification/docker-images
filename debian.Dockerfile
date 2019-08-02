@@ -35,3 +35,23 @@ RUN addgroup --gid ${GROUP_ID} user \
              user \
   && usermod -aG sudo user \
   && echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
+
+# Add LLVM repositories, if needed (versions 7 and 8).
+RUN if [ -z "$(apt-cache search --names-only llvm-8-tools)" ]; then \
+      echo "deb http://apt.llvm.org/${FLAVOR}/ llvm-toolchain-${FLAVOR}-8 main" \
+        > /etc/apt/sources.list.d/llvm.list && \
+      echo "deb-src http://apt.llvm.org/${FLAVOR}/ llvm-toolchain-${FLAVOR}-8 main" \
+        >> /etc/apt/sources.list.d/llvm.list && \
+      apt-get update -q && \
+      apt-get install -y wget && \
+      wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - ; \
+    fi
+RUN if [ -z "$(apt-cache search --names-only llvm-7-tools)" ]; then \
+      echo "deb http://apt.llvm.org/${FLAVOR}/ llvm-toolchain-${FLAVOR}-7 main" \
+        >> /etc/apt/sources.list.d/llvm.list && \
+      echo "deb-src http://apt.llvm.org/${FLAVOR}/ llvm-toolchain-${FLAVOR}-7 main" \
+        >> /etc/apt/sources.list.d/llvm.list && \
+      apt-get update -q && \
+      apt-get install -y wget && \
+      wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - ; \
+    fi
