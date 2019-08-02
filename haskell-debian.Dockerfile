@@ -13,3 +13,8 @@ RUN wget https://raw.githubusercontent.com/commercialhaskell/stack/v2.1.1/etc/sc
 
 RUN    mkdir /haskell-stack \
     && sh get-stack.sh -d /haskell-stack
+
+COPY haskell.yaml.d/ /haskell.yaml.d/
+
+RUN    cd /haskell.yaml.d \
+    && /haskell-stack/stack build --only-snapshot
