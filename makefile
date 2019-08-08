@@ -4,7 +4,9 @@ build-%:
 push-%:
 	$(eval IMG := $(shell echo $* | sed -e "s/\(^[^-]*\).*/\1/"))
 	$(eval TAG := $(shell echo $* | sed -e "s/^[^-]*-\(.*\)/\1/"))
-	docker push runtimeverificationinc/$(IMG):$(TAG)
+	$(eval NEW_IMGTAG := runtimeverificationinc/$(IMG):$(TAG))
+	docker tag $* $(NEW_IMGTAG)
+	docker push $(NEW_IMGTAG)
 
 %:
 	$(MAKE) build-$@
