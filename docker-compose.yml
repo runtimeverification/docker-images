@@ -73,3 +73,12 @@ services:
       args:
         OS: ubuntu
         FLAVOR: bionic
+
+  ocaml-ubuntu-bionic:
+    image: ocaml:ubuntu-bionic
+    build:
+      context: .
+      dockerfile: ocaml-debian.Dockerfile
+      args:
+        OS: ubuntu
+        FLAVOR: bionic
