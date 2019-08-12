@@ -83,6 +83,15 @@ services:
         OS: ubuntu
         FLAVOR: bionic
 
+  perl-ubuntu-bionic:
+    image: perl:ubuntu-bionic
+    build:
+      context: .
+      dockerfile: perl-debian.Dockerfile
+      args:
+        OS: ubuntu
+        FLAVOR: bionic
+
   kframework-ubuntu-bionic:
     image: kframework:ubuntu-bionic
     build:
