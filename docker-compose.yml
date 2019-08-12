@@ -82,3 +82,12 @@ services:
       args:
         OS: ubuntu
         FLAVOR: bionic
+
+  kframework-ubuntu-bionic:
+    image: kframework:ubuntu-bionic
+    build:
+      context: .
+      dockerfile: kframework-debian.Dockerfile
+      args:
+        OS: ubuntu
+        FLAVOR: bionic
